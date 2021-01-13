@@ -1,4 +1,5 @@
 const sliderContainer = document.querySelector("[data-js=slider]");
+const currentSliderImgReference = document.querySelectorAll(".dot");
 let currentSliderPosition = 0;
 
 const sliderImg = [
@@ -29,6 +30,8 @@ document.addEventListener("click", e => {
       putImgInSlider(currentSliderPosition);
     }
   }
+
+  referenceForTheCurrentImgInSlider();
 });
 
 setInterval(() => {
@@ -39,8 +42,36 @@ setInterval(() => {
     currentSliderPosition = 0;
     putImgInSlider(currentSliderPosition);
   }
+
+  referenceForTheCurrentImgInSlider();
 }, 10000)
 
 const putImgInSlider = img => sliderContainer.setAttribute("src", sliderImg[img]);
+
+const referenceForTheCurrentImgInSlider = () => {
+  if(currentSliderPosition === 0){
+    currentSliderImgReference[0].classList.add("dot-active")
+    currentSliderImgReference[1].classList.remove("dot-active")
+    currentSliderImgReference[2].classList.remove("dot-active")
+    currentSliderImgReference[3].classList.remove("dot-active")
+  } else if(currentSliderPosition === 1){
+    currentSliderImgReference[0].classList.remove("dot-active")
+    currentSliderImgReference[1].classList.add("dot-active")
+    currentSliderImgReference[2].classList.remove("dot-active")
+    currentSliderImgReference[3].classList.remove("dot-active")
+  } else if(currentSliderPosition === 2){
+    currentSliderImgReference[0].classList.remove("dot-active")
+    currentSliderImgReference[1].classList.remove("dot-active")
+    currentSliderImgReference[2].classList.add("dot-active")
+    currentSliderImgReference[3].classList.remove("dot-active")
+  } else if(currentSliderPosition === 3){
+    currentSliderImgReference[0].classList.remove("dot-active")
+    currentSliderImgReference[1].classList.remove("dot-active")
+    currentSliderImgReference[2].classList.remove("dot-active")
+    currentSliderImgReference[3].classList.add("dot-active")
+  }
+}
+
+referenceForTheCurrentImgInSlider();
 
 putImgInSlider(currentSliderPosition);
