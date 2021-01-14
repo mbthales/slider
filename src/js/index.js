@@ -10,31 +10,7 @@ const sliderImg = [
 ];
 const quantityOfImgsInSlider = sliderImg.length - 1;
 
-document.addEventListener("click", e => {
-  const element = e.target;
-
-  if(element.getAttribute("data-js") === "next-slider-img-btn"){   
-    if(currentSliderPosition < quantityOfImgsInSlider){
-      currentSliderPosition++;
-      putImgInSlider(currentSliderPosition);
-    } else if(currentSliderPosition === quantityOfImgsInSlider){
-      currentSliderPosition = 0;
-      putImgInSlider(currentSliderPosition);
-    }
-  } else if(element.getAttribute("data-js") === "previous-slider-img-btn"){
-    if(currentSliderPosition > 0){
-      currentSliderPosition--;
-      putImgInSlider(currentSliderPosition);
-    } else if(currentSliderPosition === 0){
-      currentSliderPosition = 3
-      putImgInSlider(currentSliderPosition);
-    }
-  }
-
-  referenceForTheCurrentImgInSlider();
-});
-
-setInterval(() => {
+const putNextImgInSlider = () => {
   if(currentSliderPosition < quantityOfImgsInSlider){
     currentSliderPosition++;
     putImgInSlider(currentSliderPosition);
@@ -42,36 +18,57 @@ setInterval(() => {
     currentSliderPosition = 0;
     putImgInSlider(currentSliderPosition);
   }
+};
 
-  referenceForTheCurrentImgInSlider();
-}, 10000)
+const putPreviousImgInSlider = () => {
+  if(currentSliderPosition > 0){
+    currentSliderPosition--;
+    putImgInSlider(currentSliderPosition);
+  } else if(currentSliderPosition === 0){
+    currentSliderPosition = 3;
+    putImgInSlider(currentSliderPosition);
+  };
+};
 
 const putImgInSlider = img => sliderContainer.setAttribute("src", sliderImg[img]);
 
-const referenceForTheCurrentImgInSlider = () => {
-  if(currentSliderPosition === 0){
-    currentSliderImgReference[0].classList.add("dot-active")
-    currentSliderImgReference[1].classList.remove("dot-active")
-    currentSliderImgReference[2].classList.remove("dot-active")
-    currentSliderImgReference[3].classList.remove("dot-active")
-  } else if(currentSliderPosition === 1){
-    currentSliderImgReference[0].classList.remove("dot-active")
-    currentSliderImgReference[1].classList.add("dot-active")
-    currentSliderImgReference[2].classList.remove("dot-active")
-    currentSliderImgReference[3].classList.remove("dot-active")
-  } else if(currentSliderPosition === 2){
-    currentSliderImgReference[0].classList.remove("dot-active")
-    currentSliderImgReference[1].classList.remove("dot-active")
-    currentSliderImgReference[2].classList.add("dot-active")
-    currentSliderImgReference[3].classList.remove("dot-active")
-  } else if(currentSliderPosition === 3){
-    currentSliderImgReference[0].classList.remove("dot-active")
-    currentSliderImgReference[1].classList.remove("dot-active")
-    currentSliderImgReference[2].classList.remove("dot-active")
-    currentSliderImgReference[3].classList.add("dot-active")
-  }
+const removeOrAddReferenceForTheCurrentImgInSlider = (...removeOrAdd) => {
+  currentSliderImgReference.forEach((ref, i) => {
+    removeOrAdd[i] === "add"? ref.classList.add("dot-active"):
+    removeOrAdd[i] === "remove"? ref.classList.remove("dot-active"): null;
+  })
 }
 
-referenceForTheCurrentImgInSlider();
+const referenceForTheCurrentImgInSlider = () => {
+  if(currentSliderPosition === 0){
+    removeOrAddReferenceForTheCurrentImgInSlider("add", "remove", "remove", "remove");
+  } else if(currentSliderPosition === 1){
+    removeOrAddReferenceForTheCurrentImgInSlider("remove", "add", "remove", "remove");
+  } else if(currentSliderPosition === 2){
+    removeOrAddReferenceForTheCurrentImgInSlider("remove", "remove", "add", "remove");
+  } else if(currentSliderPosition === 3){
+    removeOrAddReferenceForTheCurrentImgInSlider("remove", "remove", "remove", "add");
+  };
+};
+
+const imgPassAutomaticallyInSlider = () => {
+  setInterval(() => {
+    putNextImgInSlider();
+    referenceForTheCurrentImgInSlider();
+  }, 10000);
+};
 
 putImgInSlider(currentSliderPosition);
+imgPassAutomaticallyInSlider();
+referenceForTheCurrentImgInSlider();
+
+document.addEventListener("click", e => {
+  const el = e.target;
+  const elIsANextSliderImgBtn = el.getAttribute("data-js") === "next-slider-img-btn";
+  const elIsAPreviousSliderImgBtn = el.getAttribute("data-js") === "previous-slider-img-btn";
+  
+  elIsANextSliderImgBtn? putNextImgInSlider(): 
+  elIsAPreviousSliderImgBtn? putPreviousImgInSlider(): null;
+
+  referenceForTheCurrentImgInSlider();
+});
