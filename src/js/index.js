@@ -1,14 +1,15 @@
 const sliderContainer = document.querySelector("[data-js=slider]");
-const currentSliderImgReference = document.querySelectorAll(".dot");
-let currentSliderPosition = 0;
+const currentSliderImgReferences = document.querySelectorAll
+("[data-js=current-slider-img-reference");
 
-const sliderImg = [
+const imgsInSlider = [
   "./src/img/photo-1.jpg",
   "./src/img/photo-2.jpg",
   "./src/img/photo-3.jpg",
   "./src/img/photo-4.jpg"
 ];
-const quantityOfImgsInSlider = sliderImg.length - 1;
+const quantityOfImgsInSlider = imgsInSlider.length - 1;
+let currentSliderPosition = 0;
 
 const putNextImgInSlider = () => {
   if(currentSliderPosition < quantityOfImgsInSlider){
@@ -30,14 +31,7 @@ const putPreviousImgInSlider = () => {
   };
 };
 
-const putImgInSlider = img => sliderContainer.setAttribute("src", sliderImg[img]);
-
-const removeOrAddReferenceForTheCurrentImgInSlider = (...removeOrAdd) => {
-  currentSliderImgReference.forEach((ref, i) => {
-    removeOrAdd[i] === "add"? ref.classList.add("dot-active"):
-    removeOrAdd[i] === "remove"? ref.classList.remove("dot-active"): null;
-  })
-}
+const putImgInSlider = img => sliderContainer.setAttribute("src", imgsInSlider[img]);
 
 const referenceForTheCurrentImgInSlider = () => {
   if(currentSliderPosition === 0){
@@ -51,16 +45,19 @@ const referenceForTheCurrentImgInSlider = () => {
   };
 };
 
+const removeOrAddReferenceForTheCurrentImgInSlider = (...removeOrAdd) => {
+  currentSliderImgReferences.forEach((ref, i) => {
+    removeOrAdd[i] === "add"? ref.classList.add("dot-active"):
+    removeOrAdd[i] === "remove"? ref.classList.remove("dot-active"): null;
+  });
+};
+
 const imgPassAutomaticallyInSlider = () => {
   setInterval(() => {
     putNextImgInSlider();
     referenceForTheCurrentImgInSlider();
   }, 10000);
 };
-
-putImgInSlider(currentSliderPosition);
-imgPassAutomaticallyInSlider();
-referenceForTheCurrentImgInSlider();
 
 document.addEventListener("click", e => {
   const el = e.target;
@@ -69,6 +66,10 @@ document.addEventListener("click", e => {
   
   elIsANextSliderImgBtn? putNextImgInSlider(): 
   elIsAPreviousSliderImgBtn? putPreviousImgInSlider(): null;
-
+  
   referenceForTheCurrentImgInSlider();
 });
+
+putImgInSlider(currentSliderPosition);
+imgPassAutomaticallyInSlider();
+referenceForTheCurrentImgInSlider();
