@@ -4,16 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./src/css/style.css">
-  <title>Document</title>
+  <title>slider</title>
 </head>
 <body>
-  <img data-js="slider">
-  <button data-js="next-slider-img-btn">></button><button data-js="previous-slider-img-btn"><</button>
-  <div>
-    <span data-js="current-slider-img-reference" class="dot"></span>
-    <span data-js="current-slider-img-reference" class="dot"></span>
-    <span data-js="current-slider-img-reference" class="dot"></span>
-    <span data-js="current-slider-img-reference" class="dot"></span>
+  <div class="container-slider">
+    <img data-js="slider">
+    <button class="next-slider-img-btn" data-js="next-slider-img-btn">></button><button class="previous-slider-img-btn" data-js="previous-slider-img-btn"><</button>
+    <div class="container-slider-reference">
+      <span data-js="current-slider-img-reference" class="dot"></span>
+      <span data-js="current-slider-img-reference" class="dot"></span>
+      <span data-js="current-slider-img-reference" class="dot"></span>
+      <span data-js="current-slider-img-reference" class="dot"></span>
+    </div>
   </div>
   <script src="./src/js/main.js"></script>
 </body>
