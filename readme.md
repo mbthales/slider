@@ -2,10 +2,10 @@
 A slider build with JavaScript.
 
 ## Usage
-Download or clone the repo and open the HTML file in your browser or just click in this [link](https://mbthales.github.io/slider/).
+Download or clone this repo and open the HTML file in your browser or just click in this [link](https://mbthales.github.io/slider/).
 
-## Tech
-The following tools were used in the construction of the project.
+## Tech/Tools
+The following tech/tools were used in the construction of the project.
 - JavaScript
 - HTML
 - CSS
